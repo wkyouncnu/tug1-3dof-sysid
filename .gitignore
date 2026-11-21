@@ -1,0 +1,13 @@
+# MATLAB / Simulink 빌드 산출물
+src/slprj/
+src/*.slxc
+*.asv
+*.autosave
+slprj/
+
+# 재생성 가능한 대용량 중간결과 (ulog2run 으로 다시 만든다)
+out/tug1_runs.mat
+
+# 문서 빌드 중간물
+*.html
+!docs/*.html
