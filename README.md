@@ -8,6 +8,11 @@
 - 계측: 2026-11-20, Pixhawk / ULog, 50 Hz
 - 자유도: **3-DOF (surge-sway-yaw) 전용.** 6-DOF 는 다루지 않는다.
 
+> 🔗 **후속 저장소: [`wkyouncnu/tug1-3dof-sysid-pinn`](https://github.com/wkyouncnu/tug1-3dof-sysid-pinn)**
+> 이 저장소의 결과를 **기준선으로 고정**하고 학습 동역학(PINN·Neural ODE·Koopman·UDE·GRU)으로
+> 재식별한 저장소다. 같은 데이터·같은 평가에서 하이브리드 UDE 가 test 전구간 ATE 를
+> 3.109 m → 2.398 m (**−22.9 %**) 로 줄였다. 두 저장소는 같은 ULog 파이프라인을 공유한다.
+
 ---
 
 ## 1. 대상 선박
