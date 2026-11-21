@@ -1,0 +1,81 @@
+% !TeX program = xelatex
+% docs/PAPER.tex 의 전문(preamble) + 표제 + 목차.
+% tools/md2tex.py 가 이 파일을 읽어 본문 앞에 붙인다. 직접 조판하지 않는다.
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,longtable,array}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{fancyvrb}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage[hidelinks,unicode]{hyperref}
+
+\usepackage{xeCJK}
+\setCJKmainfont[BoldFont={NanumMyeongjoBold}]{NanumMyeongjo}
+\setCJKsansfont[BoldFont={Malgun Gothic Bold}]{Malgun Gothic}
+\setCJKmonofont[BoldFont={Malgun Gothic Bold}]{Malgun Gothic}
+% \XeTeXlinebreaklocale "ko" 는 쓰지 않는다. 켜면 ICU 가 한글을 글자 단위로 끊을 수 있게 되고,
+% 낱말 사이 공백이 0 까지 수축해 단어가 모두 붙어 보인다. xeCJK 기본 줄바꿈만 쓴다.
+\xeCJKsetup{CJKspace=true}
+
+\graphicspath{{../figs/}{figs/}{./}}
+\captionsetup{font=small,labelfont=bf,labelsep=period}
+\captionsetup[figure]{name={그림}}
+\captionsetup[table]{name={표}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\sloppy
+
+% 한글 서술을 담은 강조상자. 수식 \boxed 는 줄바꿈이 안 되므로 이것으로 대체한다.
+\newcommand{\keybox}[1]{%
+  \par\smallskip\noindent
+  \begin{center}\fbox{\parbox{0.93\linewidth}{\centering #1}}\end{center}%
+  \par\smallskip}
+
+\hypersetup{
+  pdftitle={쌍동형 예인선 USV 의 3자유도 조종 동역학 식별},
+  pdfauthor={윤원근 (ANSL, 충남대학교 자율운항시스템공학과)}}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries 쌍동형 예인선 USV 의\\[2pt]
+3자유도 조종 동역학 식별\par}
+\vspace{6pt}
+{\large 이론 \textperiodcentered{} 방법 \textperiodcentered{} 결과 통합본\par}
+\vspace{14pt}
+{\normalsize\bfseries Tug 1: 완전구동 쌍동형 무인수상정의\\[2pt]
+출력오차 기반 3자유도 조종 모델 식별과 궤적 수준 검증\par}
+\vspace{16pt}
+{\normalsize 윤원근\par}
+{\small AI 필드 로보틱스 연구실 (ANSL)\\
+충남대학교 자율운항시스템공학과\par}
+\vspace{10pt}
+{\small 작성 2026-11-21 \textperiodcentered{} 저장소
+\href{https://github.com/wkyouncnu/tug1-3dof-sysid}{\texttt{wkyouncnu/tug1-3dof-sysid}}\par}
+\end{center}
+
+\vspace{4pt}
+
+\begin{quote}\small
+\textbf{이 문서의 위치.} 본 문서는 \texttt{THEORY.md}(이론), \texttt{METHOD.md}(절차),
+\texttt{RESULTS.md}(수치)를 \textbf{논문 체계로 통합한 단일 문서}다. 중복을 제거하고
+수식을 LaTeX 로, 절차를 알고리즘으로 다시 썼다. 세 개별 문서는 세부 참조용으로 그대로 남겨 둔다.
+
+\textbf{조판 경로 메모.} 본 문서의 PDF 는 \texttt{PAPER.tex} 를 \textbf{XeLaTeX + xeCJK}
+(TinyTeX / TeX Live 2026) 로 직접 조판했다. 저장소의 \texttt{tools/md2html.py} + Chrome 인쇄
+경로는 Markdown 을 HTML 로만 바꾸므로 \texttt{\$...\$} 수식을 조판하지 못한다. 한글 조판은
+\texttt{NanumMyeongjo}(본문) / \texttt{Malgun Gothic}(산세리프 \textperiodcentered{} 고정폭)
+으로 해결되어 KaTeX/MathJax 대체 경로는 사용하지 않았다. \texttt{PAPER.tex} 는
+\texttt{tools/md2tex.py} 가 \texttt{docs/PAPER.md} 에서 생성한다.
+\end{quote}
+
+\vspace{6pt}
+{\small\tableofcontents}
+\clearpage

@@ -41,6 +41,8 @@ tau = [Y]   =   [ 0    0    1  ] · [f_stbd]  ,   det T = 2d = 0.6 ≠ 0
 tug_sysid/
 ├── README.md               ← 이 파일 (개요·실행방법·결과요약)
 ├── docs/
+│   ├── PAPER.md            ← ★ 통합본 (이론·방법·결과를 논문 체계로 합친 단일 문서)
+│   ├── PAPER.pdf           ← 위 문서의 PDF 판 (수식 조판본, 32쪽)
 │   ├── THEORY.md           ← 이론 (좌표계·운동방정식·추력배분·T200·식별 정식화)
 │   ├── THEORY.pdf          ← 위 문서의 PDF 판
 │   ├── METHOD.md           ← 식별 방법 상세 (파이프라인 10단계)
@@ -52,12 +54,35 @@ tug_sysid/
 │   └── t200/               ← T200 제조사 공개 성능표 (xlsx)
 ├── src/                    ← MATLAB 소스 전부 (아래 §4)
 ├── tools/
-│   └── md2html.py          ← MD → 인쇄용 HTML (PDF 재생성용, 의존성 없음)
+│   ├── md2html.py          ← MD → 인쇄용 HTML (THEORY/METHOD/RESULTS PDF 재생성용)
+│   ├── md2tex.py           ← MD → LaTeX (PAPER.tex 생성용. 수식·표·알고리즘 변환)
+│   └── paper_front.tex     ← PAPER.tex 의 전문(preamble)·표제·목차
 ├── out/                    ← 산출물 (.mat, .slx)
 └── figs/                   ← 결과 그림
 ```
 
-PDF 는 `docs/*.md` 에서 다시 만들 수 있다 (pandoc 불필요, Chrome 헤드리스만 쓴다):
+### 문서 읽는 순서
+
+| 문서 | 성격 |
+|---|---|
+| [`docs/PAPER.md`](docs/PAPER.md) · [`PAPER.pdf`](docs/PAPER.pdf) | **통합본.** 이론 → 방법 → 결과 → 논의를 한 흐름으로. 수식은 LaTeX, 절차는 언어 독립 수도코드 |
+| [`docs/THEORY.md`](docs/THEORY.md) | 물리·좌표계·T200 곡선의 세부 유도 |
+| [`docs/METHOD.md`](docs/METHOD.md) | 파이프라인 10단계의 구현 수준 절차 |
+| [`docs/RESULTS.md`](docs/RESULTS.md) | 전체 수치표 원본 |
+
+**통합본은 `PAPER`, 개별 문서(`THEORY`/`METHOD`/`RESULTS`)는 세부 참조용이다.**
+
+### PDF 재생성
+
+`PAPER.pdf` 는 **XeLaTeX + xeCJK** 로 직접 조판한다 (`md2html.py` + Chrome 경로는 `$...$`
+수식을 조판하지 못하므로 통합본에는 쓰지 않는다). 경로에 한글이 없는 폴더에서 돌릴 것:
+
+```
+python tools/md2tex.py docs/PAPER.md docs/PAPER.tex      # 전문은 tools/paper_front.tex 를 자동으로 붙인다
+xelatex -interaction=nonstopmode PAPER.tex               # 목차 안정화를 위해 3회
+```
+
+`THEORY`/`METHOD`/`RESULTS` 의 PDF 는 기존 경로 그대로다 (pandoc 불필요, Chrome 헤드리스만 쓴다):
 
 ```
 python tools/md2html.py docs/THEORY.md THEORY.html "Tug 1 3-DOF 운동모델 이론"
@@ -152,7 +177,8 @@ run_slx_val
 
 ## 5. 결과 요약
 
-상세는 [`docs/RESULTS.md`](docs/RESULTS.md).
+해석까지 포함한 통합 서술은 [`docs/PAPER.md`](docs/PAPER.md) §9–§10, 수치표 원본은
+[`docs/RESULTS.md`](docs/RESULTS.md).
 
 ### 5.1 PWM 입력판 ↔ 식별 경로의 등가성
 
